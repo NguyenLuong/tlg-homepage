@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum NewsStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum JobStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  CLOSED
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  PUBLISH
+  SCHEDULE
+  DELETE
+  LOGIN
+}
+
+enum EntityType {
+  NEWS
+  JOB
+  MEDIA
+}
+
+enum MediaProvider {
+  CLOUDINARY
+}
+
+model User {
+  id          String   @id @default(uuid()) @db.Uuid
+  email       String   @unique
+  passwordHash String
+  name        String
+  role        UserRole
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lastLoginAt DateTime?
+
+  createdNews  NewsPost[]  @relation("NewsCreatedBy")
+  updatedNews  NewsPost[]  @relation("NewsUpdatedBy")
+  createdJobs  JobPost[]   @relation("JobCreatedBy")
+  updatedJobs  JobPost[]   @relation("JobUpdatedBy")
+  revisions    Revision[]
+  auditLogs    AuditLog[]
+}
+
+model NewsCategory {
+  id      String  @id @default(uuid()) @db.Uuid
+  nameVN  String
+  nameJA  String?
+  slug    String  @unique
+  iconKey String
+
+  newsPosts NewsPost[]
+}
+
+model NewsPost {
+  id          String     @id @default(uuid()) @db.Uuid
+  title       String
+  slug        String     @unique
+  contentRich Json       @db.JsonB
+  categoryId  String     @db.Uuid
+  status      NewsStatus @default(DRAFT)
+  publishAt   DateTime?
+  scheduledAt DateTime?
+  createdById String     @db.Uuid
+  updatedById String     @db.Uuid
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  category  NewsCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdBy User         @relation("NewsCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy User         @relation("NewsUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
+
+  @@index([status, publishAt])
+  @@index([status, scheduledAt])
+  @@index([categoryId])
+}
+
+model Prefecture {
+  id      String  @id @default(uuid()) @db.Uuid
+  nameJP  String?
+  nameVN  String
+  code    String  @unique
+
+  jobPosts JobPost[]
+}
+
+model JobCategory {
+  id     String  @id @default(uuid()) @db.Uuid
+  nameVN String
+  nameJA String?
+  slug   String  @unique
+}
+
+model Tag {
+  id     String  @id @default(uuid()) @db.Uuid
+  nameVN String
+  nameJA String?
+  slug   String  @unique
+}
+
+model JobPost {
+  id                   String    @id @default(uuid()) @db.Uuid
+  title                String
+  slug                 String    @unique
+  heroImageId          String?   @db.Uuid
+  locationPrefectureId String    @db.Uuid
+  salaryText           String
+  benefits             Json      @db.JsonB
+  descriptionRich      Json      @db.JsonB
+  status               JobStatus @default(DRAFT)
+  isFeatured           Boolean   @default(false)
+  publishAt            DateTime?
+  scheduledAt          DateTime?
+  createdById          String    @db.Uuid
+  updatedById          String    @db.Uuid
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  heroImage   MediaAsset? @relation(fields: [heroImageId], references: [id], onDelete: SetNull)
+  prefecture  Prefecture  @relation(fields: [locationPrefectureId], references: [id], onDelete: Restrict)
+  createdBy   User        @relation("JobCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy   User        @relation("JobUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
+
+  @@index([status, publishAt])
+  @@index([status, scheduledAt])
+  @@index([isFeatured, status])
+  @@index([locationPrefectureId])
+}
+
+model MediaAsset {
+  id        String        @id @default(uuid()) @db.Uuid
+  provider  MediaProvider @default(CLOUDINARY)
+  publicId  String
+  url       String
+  width     Int
+  height    Int
+  bytes     Int
+  mime      String
+  altText   String?
+  createdAt DateTime      @default(now())
+
+  jobHeroes    JobPost[]
+
+  @@unique([provider, publicId])
+}
+
+model Revision {
+  id           String    @id @default(uuid()) @db.Uuid
+  entityType   EntityType
+  entityId     String    @db.Uuid
+  snapshotJson Json      @db.JsonB
+  createdById  String    @db.Uuid
+  createdAt    DateTime  @default(now())
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([entityType, entityId, createdAt])
+}
+
+model AuditLog {
+  id         String      @id @default(uuid()) @db.Uuid
+  action     AuditAction
+  entityType EntityType
+  entityId   String?     @db.Uuid
+  metaJson   Json        @db.JsonB
+  createdById String     @db.Uuid
+  createdAt  DateTime    @default(now())
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([action, createdAt])
+  @@index([entityType, entityId, createdAt])
+}
