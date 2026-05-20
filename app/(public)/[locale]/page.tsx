@@ -2,15 +2,12 @@ import {
   localizePublicPath,
   parsePublicLocale,
 } from "@/lib/i18n/public-locales";
-import { getHomeJobsPreview } from "@/lib/public-content/jobs-preview";
-import { getHomeNewsHeadlines } from "@/lib/public-content/news-headlines";
 import { getHomepageContent } from "@/lib/public-content/homepage-content";
 import {
   HeroSection,
   AboutSection,
-  HomeJobsSection,
   AchievementsSection,
-  NewsHeadlinesSection,
+  ImageSlider,
 } from "@/components/public/home";
 
 type PublicHomePageProps = {
@@ -25,8 +22,6 @@ export default async function Page({ params }: PublicHomePageProps = {}) {
   const withLocale = (href: string) => localizePublicPath(href, locale);
 
   const content = await getHomepageContent(locale);
-  const jobsPreview = (await getHomeJobsPreview()).slice(0, 3);
-  const newsHeadlines = await getHomeNewsHeadlines();
 
   return (
     <div className="landing-page relative isolate overflow-x-hidden bg-linear-to-b from-cyan-50 via-white to-sky-50/40">
@@ -35,18 +30,13 @@ export default async function Page({ params }: PublicHomePageProps = {}) {
 
       <HeroSection hero={content.hero} withLocale={withLocale} />
 
+      <div className="bg-sky-50/60 pt-10 md:pt-14">
+        <ImageSlider />
+      </div>
+
       <AboutSection locale={locale} />
 
       <AchievementsSection achievementsSection={content.achievementsSection} />
-
-      <NewsHeadlinesSection
-        blogSection={content.blogSection}
-        headlines={newsHeadlines}
-        locale={locale}
-        withLocale={withLocale}
-      />
-
-      <HomeJobsSection jobs={jobsPreview} locale={locale} />
     </div>
   );
 }

@@ -151,6 +151,20 @@ export type AdminJobFeaturePayload = {
   isFeatured: boolean;
 };
 
+export type ContactSubmitPayload = {
+  name: string;
+  furigana: string;
+  company?: string;
+  email: string;
+  postalCode: string;
+  prefecture: string;
+  addressLine: string;
+  inquiryType: "technical-intern" | "specified-skill" | "other";
+  message: string;
+  sourcePage?: string;
+  locale?: PublicLocale;
+};
+
 type QueryInput = URLSearchParams | Record<string, unknown>;
 type PayloadParser<T> = (payload: unknown) => T;
 
@@ -743,6 +757,105 @@ export function parseAdminJobFeaturePayload(
 
 export function parseUuidValue(value: unknown, field: string): string {
   return parseUuid(value, field);
+}
+
+const CONTACT_INQUIRY_TYPES = [
+  "technical-intern",
+  "specified-skill",
+  "other",
+] as const;
+
+export function parseContactSubmitPayload(
+  payload: unknown,
+  options: { allowedPrefectures: ReadonlyArray<string> },
+): ContactSubmitPayload {
+  const input = ensureObject(payload);
+
+  const name = parseRequiredString(input.name, "name", { maxLength: 200 });
+  const furigana = parseRequiredString(input.furigana, "furigana", {
+    maxLength: 200,
+  });
+  const company = parseOptionalString(input.company, "company", {
+    maxLength: 200,
+  });
+
+  const email = parseRequiredString(input.email, "email", {
+    maxLength: 320,
+  }).toLowerCase();
+  if (!EMAIL_REGEX.test(email)) {
+    throw new ValidationError("email", "must be a valid email address");
+  }
+
+  const postalCode = parseRequiredString(input.postalCode, "postalCode", {
+    maxLength: 8,
+  });
+  if (!/^\d{3}-\d{4}$/.test(postalCode)) {
+    throw new ValidationError(
+      "postalCode",
+      "must be in XXX-XXXX format",
+    );
+  }
+
+  const prefecture = parseRequiredString(input.prefecture, "prefecture", {
+    maxLength: 64,
+  });
+  if (!options.allowedPrefectures.includes(prefecture)) {
+    throw new ValidationError("prefecture", "must be a valid prefecture");
+  }
+
+  const addressLine = parseRequiredString(input.addressLine, "addressLine", {
+    maxLength: 200,
+  });
+
+  const inquiryTypeRaw = parseRequiredString(
+    input.inquiryType,
+    "inquiryType",
+    { maxLength: 64 },
+  );
+  if (
+    !(CONTACT_INQUIRY_TYPES as readonly string[]).includes(inquiryTypeRaw)
+  ) {
+    throw new ValidationError(
+      "inquiryType",
+      `must be one of: ${CONTACT_INQUIRY_TYPES.join(", ")}`,
+    );
+  }
+
+  const message = parseRequiredString(input.message, "message", {
+    maxLength: 4000,
+  });
+
+  const sourcePage = parseOptionalString(input.sourcePage, "sourcePage", {
+    maxLength: 200,
+  });
+
+  const localeRaw = parseOptionalString(input.locale, "locale", {
+    maxLength: 8,
+  });
+  let locale: PublicLocale | undefined;
+  if (localeRaw !== undefined) {
+    if (!(PUBLIC_LOCALES as readonly string[]).includes(localeRaw)) {
+      throw new ValidationError(
+        "locale",
+        `must be one of: ${(PUBLIC_LOCALES as readonly string[]).join(", ")}`,
+      );
+    }
+    locale = localeRaw as PublicLocale;
+  }
+
+  return {
+    name,
+    furigana,
+    company,
+    email,
+    postalCode,
+    prefecture,
+    addressLine,
+    inquiryType: inquiryTypeRaw as ContactSubmitPayload["inquiryType"],
+    message,
+    sourcePage,
+    locale,
+  };
 }
 
 export function parseAdminNewsUpdatePayload(
