@@ -18,3 +18,4 @@ export * as auditRepo from "./audit";
 export * as usersRepo from "./users";
 export * as mediaRepo from "./media";
 export * as lookupsRepo from "./lookups";
+export * as contactSubmissionsRepo from "./contact-submissions";

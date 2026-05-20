@@ -5,3 +5,4 @@ export * from "./about-section";
 export * from "./home-jobs-section";
 export * from "./achievements-section";
 export * from "./news-headlines-section";
+export * from "./image-slider";

@@ -224,6 +224,17 @@ export function PublicHeader({
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Desktop CTA Button */}
+          <Link
+            href={localizePublicPath(
+              resolvedContent.cta.href,
+              resolvedLocale,
+            )}
+            className="hidden items-center rounded-full bg-cyan-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 md:inline-flex"
+          >
+            {resolvedContent.cta.label}
+          </Link>
+
           {/* Desktop Language Toggle */}
           <button
             type="button"
@@ -342,6 +353,18 @@ export function PublicHeader({
 
                 {/* Drawer Footer */}
                 <div className="space-y-3 border-t border-slate-100 px-4 py-4">
+                  {/* Mobile CTA Button */}
+                  <Link
+                    href={localizePublicPath(
+                      resolvedContent.cta.href,
+                      resolvedLocale,
+                    )}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex w-full items-center justify-center rounded-full bg-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-cyan-700"
+                  >
+                    {resolvedContent.cta.label}
+                  </Link>
+
                   {/* Mobile Language Toggle */}
                   <button
                     type="button"

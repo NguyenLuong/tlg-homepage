@@ -29,6 +29,10 @@ export type PublicHeaderContent = {
     switchTo: string;
     ariaLabel: string;
   };
+  cta: {
+    label: string;
+    href: string;
+  };
 };
 
 export type PublicFooterContactItem = {
@@ -84,7 +88,7 @@ const PUBLIC_NAVIGATION_ITEMS: ReadonlyArray<PublicNavigationItem> = [
     labelVI: "Tin tức",
     labelJP: "ニュース",
     position: 4,
-    visible: true,
+    visible: false,
   },
   {
     key: "jobs",
@@ -92,7 +96,7 @@ const PUBLIC_NAVIGATION_ITEMS: ReadonlyArray<PublicNavigationItem> = [
     labelVI: "Tuyển dụng",
     labelJP: "採用情報",
     position: 5,
-    visible: true,
+    visible: false,
   },
 ];
 
@@ -112,12 +116,20 @@ const HEADER_CONTENT_BY_LOCALE: Readonly<
       switchTo: "日本語",
       ariaLabel: "Chuyển sang tiếng Nhật",
     },
+    cta: {
+      label: "Liên hệ & Yêu cầu tài liệu",
+      href: "/contact",
+    },
   },
   ja: {
     languageSwitcher: {
       label: "日本語",
       switchTo: "Tiếng Việt",
       ariaLabel: "ベトナム語に切り替える",
+    },
+    cta: {
+      label: "お問い合わせ・資料請求",
+      href: "/contact",
     },
   },
 };
