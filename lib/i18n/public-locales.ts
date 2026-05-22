@@ -2,7 +2,7 @@ export const PUBLIC_LOCALES = ["vi", "ja"] as const;
 
 export type PublicLocale = (typeof PUBLIC_LOCALES)[number];
 
-export const DEFAULT_PUBLIC_LOCALE: PublicLocale = "vi";
+export const DEFAULT_PUBLIC_LOCALE: PublicLocale = "ja";
 
 export const PUBLIC_LOCALE_FALLBACKS: Readonly<
   Record<PublicLocale, PublicLocale>

@@ -69,22 +69,22 @@ describe("resolveLocalizedContentBlock", () => {
   it("falls back to first available locale when requested and paired fallback are unavailable", () => {
     const resolved = resolveLocalizedContentBlock(
       {
-        vi: null,
-        ja: "Naiyou",
+        vi: "Noi dung",
+        ja: null,
       },
       "unknown-locale",
       {
-        fallbackLocale: "vi",
+        fallbackLocale: "ja",
         blockName: "Detail section",
       },
     );
 
     expect(resolved).toEqual({
-      requestedLocale: "vi",
-      resolvedLocale: "ja",
-      block: "Naiyou",
+      requestedLocale: "ja",
+      resolvedLocale: "vi",
+      block: "Noi dung",
       fallbackNotice:
-        "Detail section dang duoc hien thi bang tieng Nhat vi noi dung cua ngon ngu ban chon hien khong kha dung.",
+        "Detail section wa Betonamugo de hyoji sarete imasu. Gokibou no gengo no content ga genzai arimasen.",
     });
   });
 
