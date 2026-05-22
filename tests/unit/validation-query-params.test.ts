@@ -20,7 +20,7 @@ describe("parseNewsQueryParams", () => {
     expect(parseNewsQueryParams(new URLSearchParams())).toMatchObject({
       page: 1,
       pageSize: 10,
-      locale: "vi",
+      locale: "ja",
     });
   });
 
@@ -82,7 +82,7 @@ describe("parseNewsQueryParams", () => {
     ).toEqual({
       page: 1,
       pageSize: 10,
-      locale: "vi",
+      locale: "ja",
       category: undefined,
       q: undefined,
     });
@@ -116,7 +116,7 @@ describe("parseJobsQueryParams", () => {
     expect(parseJobsQueryParams(new URLSearchParams())).toMatchObject({
       page: 1,
       pageSize: 10,
-      locale: "vi",
+      locale: "ja",
     });
   });
 
@@ -173,7 +173,7 @@ describe("parseJobsQueryParams", () => {
     ).toEqual({
       page: 1,
       pageSize: 10,
-      locale: "vi",
+      locale: "ja",
       prefecture: undefined,
     });
   });

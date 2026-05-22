@@ -44,12 +44,9 @@ export function HeroSection({ hero, withLocale }: HeroSectionProps) {
           <h1 className="mt-4 max-w-xl text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl">
             {hero.title}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-slate-700 md:text-lg">
+          <p className="mt-6 max-w-xl whitespace-pre-line text-base leading-7 text-slate-700 md:text-lg">
             {hero.description}
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <CtaLink href={withLocale("/jobs")} label={hero.primaryCtaLabel} />
-          </div>
         </div>
       </div>
     </section>

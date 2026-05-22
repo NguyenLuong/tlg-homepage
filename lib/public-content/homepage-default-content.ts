@@ -9,7 +9,7 @@ export const DEFAULT_HOMEPAGE_CONTENT = {
       badge: "Công ty Cổ phần TLG",
       title: "Vươn tới tương lai",
       description:
-        "TLG kết nối ứng viên nước ngoài với doanh nghiệp uy tín tại Nhật Bản qua quy trình tuyển dụng rõ ràng và hỗ trợ thích nghi.",
+        "TLG kết nối ứng viên nước ngoài với doanh nghiệp uy tín tại Nhật Bản qua quy trình tuyển dụng rõ ràng và hỗ trợ thích nghi.\nHỗ trợ tiếp nhận nhân lực nước ngoài\nTLG thực hiện tiếp nhận nhân lực nước ngoài thuộc nhiều ngành nghề đa dạng.\nTừ thủ tục nhập cảnh, quản lý tại Nhật Bản đến thủ tục về nước, hãy để TLG lo trọn vẹn.",
       primaryCtaLabel: "Xem công việc",
       bannerImageId: null,
     },
@@ -184,7 +184,7 @@ export const DEFAULT_HOMEPAGE_CONTENT = {
       badge: "TLG株式会社",
       title: "未来へ羽ばたく",
       description:
-        "TLGは、明確な採用プロセスと適応サポートを通じて、海外の応募者と日本の信頼できる企業を繋ぎます。",
+        "TLGは、明確な採用プロセスと適応サポートを通じて、海外の応募者と日本の信頼できる企業を繋ぎます。\n外国人人材　受け入れのお手伝い\nTLGは、様々な職種の外国人人材の受け入れを行っております。\n入国手続、日本国内での管理、帰国手続等、全てをお任せください。",
       primaryCtaLabel: "求人を見る",
       bannerImageId: null,
     },
