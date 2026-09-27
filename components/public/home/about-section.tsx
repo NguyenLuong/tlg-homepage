@@ -77,8 +77,8 @@ const COMPANY_DATA: Record<
 > = {
   vi: {
     companyName: "Công ty Cổ phần TLG",
-    representative: "Nguyễn Văn Lãnh",
-    address: "3-23-23 Kitakoiwa, Quận Edogawa, Tokyo 113-0051, Nhật Bản",
+    representative: "Trần Văn Lãnh",
+    address: "3-23-23 Kitakoiwa, Quận Edogawa, Tokyo 133-0051, Nhật Bản",
     phone: "03-6784-4064",
     corporateNumber: "0115-01-024488",
     established: "Ngày 6 tháng 2 năm 2019",
@@ -87,7 +87,7 @@ const COMPANY_DATA: Record<
   ja: {
     companyName: "TLG株式会社",
     representative: "チャン　バン　ラン",
-    address: "〒113-0051 東京都江戸川区北小岩 3-23-23",
+    address: "〒133-0051 東京都江戸川区北小岩 3-23-23",
     phone: "03-6784-4064",
     corporateNumber: "0115-01-024488",
     established: "平成31年2月6日",
