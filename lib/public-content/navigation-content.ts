@@ -156,7 +156,7 @@ const FOOTER_CONTENT_BY_LOCALE: Readonly<
       },
       {
         label: "Địa chỉ",
-        value: "3-23-23 Kitakoiwa, Quận Edogawa, Tokyo 113-0051, Nhật Bản",
+        value: "3-23-23 Kitakoiwa, Quận Edogawa, Tokyo 133-0051, Nhật Bản",
         href: "",
       },
     ],
@@ -188,7 +188,7 @@ const FOOTER_CONTENT_BY_LOCALE: Readonly<
       },
       {
         label: "住所",
-        value: "〒113-0051 東京都江戸川区北小岩3-23-23",
+        value: "〒133-0051 東京都江戸川区北小岩3-23-23",
         href: "",
       },
     ],
